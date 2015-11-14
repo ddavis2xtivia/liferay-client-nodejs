@@ -12,7 +12,7 @@ describe('Test build of services using Xtivia\'s Liferay Demo server',function()
     describe('Test signin functionality',function() {
         it('should pass if server is available and user information is correct',function() {
             this.timeout(15000); // Just in case slow access to server
-            return require('../../index.js')({server:'http://liferaydemo.xtivia.com'}).then(function(connection){
+            return require('../../index.js')({server:'http://liferaydemo.xtivia.com',contexts:{'mobile-demo-integration-portlet':'MobileDemo'}}).then(function(connection){
                 chai.assert.isNotNull(connection);
                 return connection.signin({
                     authenticationType: connection.AuthenticationType.BASIC,
