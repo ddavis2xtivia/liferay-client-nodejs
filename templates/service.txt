@@ -1,0 +1,20 @@
+function <%= contents.name %>(connection) {
+    this.connection = connection;
+    if(connection === null||connection === undefined) {
+        throw new Error('Connection is required');
+    }
+}
+
+// Begin generated service methods
+<%_.forOwn(contents.methods,function(method,key){%><%= contents.name %>.prototype.<%=method.actionName%> = function(<%var c=false;_.forEach(method.parameters,function(parameter) {if(c){%>,<%};c=true;%><%=parameter.name%><%});%>) {
+    return connection.invoke({'<%=method.path%>':{
+        <%var c=false;_.forEach(method.parameters,function(parameter) {if(c){%>
+        ,<%};c=true;%><%=parameter.name%>:<%=parameter.name%> // <%= parameter.type %><%});%>
+    }});
+};
+<%});%>
+// End generated service methods
+
+module.exports = function(connection) {
+    return new <%= contents.name %>(connection);
+};

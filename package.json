@@ -1,0 +1,34 @@
+{
+  "name": "liferay-client-nodejs",
+  "version": "0.0.1",
+  "main": "index.js",
+  "keywords": [
+    "liferay",
+    "nodejs",
+    "framework",
+    "web",
+    "js"
+  ],
+  "homepage": "http://www.xtivia.com",
+  "author": {"name":"Donald Lamar Davis II","email":"ddavis@xtivia.com","url":"https://blogs.xtivia.com/donald-lamar-davis-ii"},
+  "bugs": { "url": "https://github.com/xtivia/liferay-client-nodejs/issues" },
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts":{
+    "test":"mocha -R spec ./test/node/test-main.js"
+  },
+  "devDependencies":{
+    "node-assertthat":"^0.2.3",
+    "mocha":"^2.3.3",
+    "chai":"^3.4.1"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jasmine": "^2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-wrap": "^0.11.0",
+    "http-request": "^0.7.0",
+    "mkdirp": "^0.5.1",
+    "q": "^1.4.1",
+    "del":"^2.0.2"
+  }
+}
