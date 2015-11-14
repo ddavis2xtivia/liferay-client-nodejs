@@ -10,18 +10,25 @@
     "js"
   ],
   "homepage": "http://www.xtivia.com",
-  "author": {"name":"Donald Lamar Davis II","email":"ddavis@xtivia.com","url":"https://blogs.xtivia.com/donald-lamar-davis-ii"},
-  "bugs": { "url": "https://github.com/xtivia/liferay-client-nodejs/issues" },
-  "license": "SEE LICENSE IN LICENSE",
-  "scripts":{
-    "test":"mocha -R spec ./test/node/test-main.js"
+  "author": {
+    "name": "Donald Lamar Davis II",
+    "email": "ddavis@xtivia.com",
+    "url": "https://blogs.xtivia.com/donald-lamar-davis-ii"
   },
-  "devDependencies":{
-    "node-assertthat":"^0.2.3",
-    "mocha":"^2.3.3",
-    "chai":"^3.4.1"
+  "bugs": {
+    "url": "https://github.com/xtivia/liferay-client-nodejs/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "test": "mocha -R spec ./test/node/test-main.js"
+  },
+  "devDependencies": {
+    "node-assertthat": "^0.2.3",
+    "mocha": "^2.3.3",
+    "chai": "^3.4.1"
   },
   "dependencies": {
+    "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-jasmine": "^2.1.0",
     "gulp-rename": "^1.2.2",
@@ -29,6 +36,6 @@
     "http-request": "^0.7.0",
     "mkdirp": "^0.5.1",
     "q": "^1.4.1",
-    "del":"^2.0.2"
+    "string.prototype.endswith": "^0.2.0"
   }
 }

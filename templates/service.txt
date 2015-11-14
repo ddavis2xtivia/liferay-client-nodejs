@@ -6,8 +6,8 @@ function <%= contents.name %>(connection) {
 }
 
 // Begin generated service methods
-<%_.forOwn(contents.methods,function(method,key){%><%= contents.name %>.prototype.<%=method.actionName%> = function(<%var c=false;_.forEach(method.parameters,function(parameter) {if(c){%>,<%};c=true;%><%=parameter.name%><%});%>) {
-    return connection.invoke({'<%=method.path%>':{
+<%_.forOwn(contents.methods,function(method,key){%><%= contents.name %>.prototype.<%=method.actionName%> = function(ctx<%_.forEach(method.parameters,function(parameter) {%>,<%=parameter.name%><%});%>) {
+    return this.connection.invoke(ctx,{'<%=method.path%>':{
         <%var c=false;_.forEach(method.parameters,function(parameter) {if(c){%>
         ,<%};c=true;%><%=parameter.name%>:<%=parameter.name%> // <%= parameter.type %><%});%>
     }});

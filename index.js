@@ -14,6 +14,8 @@ var gulp = require('gulp');
 var wrap = require('gulp-wrap');
 var rename = require("gulp-rename");
 
+require('string.prototype.endswith');
+
 function isUndefinedOrNull(obj) {
     return obj==null||obj==undefined;
 }
@@ -166,6 +168,78 @@ Connection.prototype.generate = function() {
 
 Connection.prototype.require = function(serviceName) {
     return require(this.options.root+this.options.jsDir+'/'+serviceName+'.js')(this);
+};
+
+Connection.prototype.AuthenticationType = {
+    BASIC: 'basic',
+    DIGEST: 'digest'
+};
+
+Connection.prototype.invoke = function(ctx,command) {
+    var url = this.options.server;
+    if(url.endsWith('/')) {
+        url = url + 'api/jsonws/invoke';
+    } else {
+        url = url + '/api/jsonws/invoke';
+    }
+    var request = {
+        url: url,
+        reqBody: new Buffer(JSON.stringify([command])),
+        headers: {
+            'content-type': 'application/json'
+        }
+    };
+    if(ctx.authenticationType) {
+        if(ctx.authenticationType === this.AuthenticationType.BASIC) {
+            request.auth = {
+                type: 'basic',
+                username: ctx.username,
+                password: ctx.credentials
+            }
+        }
+    }
+    var deferred = $q.defer();
+    http.post(request,function(err,res) {
+        if(err) {
+            deferred.reject(err);
+        } else {
+            var value = JSON.parse(res.buffer.toString());
+            if(value) {
+                if(Array.isArray(value)) {
+                    deferred.resolve(value.length>0?value[0]:{});
+                } else {
+                    deferred.reject(value);
+                }
+            } else {
+                deferred.reject(new Exception("Empty Body"));
+            }
+        }
+    });
+    return deferred.promise;
+};
+
+Connection.prototype.signin = function(authentication) {
+    if(authentication) {
+        var ctx = {};
+        ctx.authenticationType = authentication.authenticationType;
+        ctx.username = authentication.username;
+        ctx.credentials = authentication.credentials;
+        var deferred = $q.defer();
+        var self = this;
+        self.require('LiferayGroupService').getUserSites(ctx).then(function(resp){
+            var site = resp[0];
+            self.require('LiferayUserService').getUserByEmailAddress(ctx,site.companyId,ctx.username)
+                .then(function(resp) {
+                    ctx.user = resp;
+                    deferred.resolve(ctx);
+                },function(err) {
+                    deferred.reject(err);
+                });
+        },function(err){
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    }
 };
 
 module.exports = function(options) {
