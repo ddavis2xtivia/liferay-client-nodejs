@@ -2,6 +2,7 @@
   "name": "liferay-client-nodejs",
   "version": "0.0.1",
   "main": "index.js",
+  "description": "NodeJS client for Liferay SDK Services and Custom Services based on Lifray SDK",
   "keywords": [
     "liferay",
     "nodejs",
